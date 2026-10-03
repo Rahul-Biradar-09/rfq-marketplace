@@ -277,7 +277,8 @@ a {
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  gap: 8px;
+  margin-bottom: 24px;
 }
 
 .form-label {
