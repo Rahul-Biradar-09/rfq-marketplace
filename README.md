@@ -153,6 +153,7 @@ User Roles
 
 Buyer
 A buyer can:
+
 - Register and login
 - Create an RFQ
 - Edit an RFQ
@@ -162,6 +163,7 @@ A buyer can:
 
 Supplier
 A supplier can:
+
 - Register and login
 - Browse active RFQs
 - Search and filter RFQs
@@ -171,6 +173,7 @@ A supplier can:
 
 RFQ Fields
 Each RFQ contains:
+
 - Product / Service name
 - Description
 - Quantity
@@ -182,6 +185,7 @@ Each RFQ contains:
 
 Quotation Fields
 Each quotation contains:
+
 - RFQ
 - Supplier
 - Quoted price
@@ -190,7 +194,9 @@ Each quotation contains:
 - Creation timestamp
 - Last updated timestamp
 
-A supplier can submit only one quotation for a particular RFQ.
+
+An RFQ can receive quotations from multiple suppliers.
+Each supplier can submit only one quotation for a particular RFQ.
 
 
 
@@ -337,6 +343,7 @@ Environment Variables
 Backend
 
 Create a .env file inside the backend directory:
+
 DATABASE_URL=your_postgresql_connection_string
 JWT_SECRET=your_jwt_secret
 FRONTEND_URL=http://localhost:5173
@@ -350,6 +357,7 @@ VITE_API_URL=http://localhost:5000/api
 Environment files containing secrets are excluded from Git using .gitignore.
 
 Local Setup
+
 1. Clone the Repository
 git clone https://github.com/Rahul-Biradar-09/rfq-marketplace.git
 cd rfq-marketplace
@@ -387,6 +395,7 @@ The frontend runs on:
 http://localhost:5173
 
 Business Rules
+
 - Only authenticated users can access protected functionality.
 - Buyers can create, update, and delete their own RFQs.
 - Buyers cannot modify another buyer's RFQ.
@@ -402,6 +411,7 @@ Validation
 
 The backend uses Zod for request validation.
 Examples of validation rules include:
+
 - Valid email format
 - Password minimum length
 - Valid user role
@@ -414,6 +424,7 @@ Examples of validation rules include:
 - Message length limits
 
 Error Handling
+
 The API uses standard HTTP status codes including:
 400 Bad Request
 401 Unauthorized
@@ -423,6 +434,7 @@ The API uses standard HTTP status codes including:
 500 Internal Server Error
 
 The frontend provides:
+
 - Loading states
 - Empty states
 - API error messages
@@ -430,6 +442,7 @@ The frontend provides:
 - Authentication handling
 
 Security Considerations
+
 - JWT authentication
 - bcrypt password hashing
 - Role-based authorization
@@ -441,15 +454,47 @@ Security Considerations
 - Unique database constraint for duplicate quotations
 
 Deployment
+
 The application is designed to use:
+
 Frontend  → Render Static Site
 Backend   → Render Web Service
 Database  → Supabase PostgreSQL
 
+
+### Live Application
+
+Frontend:
+https://rfq-marketplace-frontend-9jr3.onrender.com
+
+Backend API:
+https://rfq-marketplace-backend-4jtm.onrender.com
+
+Health Check:
+https://rfq-marketplace-backend-4jtm.onrender.com/api/health
+
+
 The production backend uses the Supabase PostgreSQL connection through Prisma.
-Production environment variables are configured through the hosting platform rather than committed to the repository.
+Production environment variables are configured in Render and are not stored in the repository.
+
+
+### Production Architecture
+
+React/Vite Frontend
+        ↓
+Render Static Site
+        ↓
+Express.js REST API
+        ↓
+Render Web Service
+        ↓
+Prisma ORM
+        ↓
+Supabase PostgreSQL
+
 
 Assumptions
+
 - An RFQ remains available to suppliers while its deadline has not passed.
 - A supplier can submit at most one quotation per RFQ.
 - Buyers can view quotations submitted for their own RFQs.
